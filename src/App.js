@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Todos from './components/Todos';
+import AddTodo from './components/AddTodo';
+import Header from "./components/layout/Header";
 
 class App extends Component {
 
@@ -40,13 +42,48 @@ class App extends Component {
     })
   }
 
+  addTodo = (title) => {
+
+    //to generatee random id  use uuid
+    //install uuid by npm install uuid
+    //import uuid from 'uuid';
+    //use uuid.v4() to generate random Id
+    const len = this.state.todos.length
+    const newTodo = {
+      id: len + 1,
+      title: title,
+      completed: false
+    }
+    this.setState({ todos: [...this.state.todos, newTodo] })
+    
+
+    //state is a special variable we can only change by setState re reflect immidiately
+    // const len = this.state.todos.length
+    // this.state.todos.push(
+
+    //   {
+    //     id: len + 1,
+    //     title: title,
+    //     completed: false
+    //   }
+
+    // )
+     console.log(this.state.todos)
+  
+  }
+
   render(){
     return(
       <div className="App">
+        <div className="container">
+        <Header />
+        <AddTodo addTodo = {this.addTodo}/>
         <Todos todos = {this.state.todos} markComplete = { this.markComplete } delTodo = {this.delTodo}/>
+        </div>
       </div>
     );
   }
+
 }
 
 export default App;
