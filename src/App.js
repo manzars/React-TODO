@@ -106,13 +106,13 @@ class App extends Component {
               <Todos todos = {this.state.todos} markComplete = { this.markComplete } delTodo = {this.delTodo}/>
             </React.Fragment>
           )} />
-          <Route path = "/about" render={(props) =>(
-
-            <React.Fragment>
-              <About />
-            </React.Fragment>
-
-          )} />
+          <Route path = "/about" render={(props) =>{
+            return(
+              <React.Fragment>
+                <About />
+              </React.Fragment>
+            )
+          }} />
           </div>
         </div>
       </Router>
