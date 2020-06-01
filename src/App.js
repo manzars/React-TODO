@@ -3,6 +3,9 @@ import './App.css';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
 import Header from "./components/layout/Header";
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import About from './components/pages/About';
+// import axios from 'axios';
 
 class App extends Component {
 
@@ -10,21 +13,30 @@ class App extends Component {
     todos: [
       {
         id: 1,
-        title: "Take out the trash",
-        completed: false,
+        title: "Dinner with Girlfriend",
+        complete: false
       },
       {
         id: 2,
-        title: "Dinner with Girlfriend",
-        completed: false,
+        title: "Learn Something Extra",
+        complete: false
       },
       {
         id: 3,
-        title: "Meeting with boss",
-        completed: false,
+        title: "Watch Youtube vs Tiktok",
+        complete: false
       }
-    ]
+   ]
   }
+
+  // function to call api
+  // componentDidMount() {
+
+  //   axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10").then((res) =>{
+  //      return this.setState({todos: res.data})
+  //   })
+
+  // }
 
   markComplete = (id) =>{
     this.setState({todos: this.state.todos.map(todo => {
@@ -48,6 +60,8 @@ class App extends Component {
     //install uuid by npm install uuid
     //import uuid from 'uuid';
     //use uuid.v4() to generate random Id
+
+    //method without adding api
     const len = this.state.todos.length
     const newTodo = {
       id: len + 1,
@@ -55,6 +69,14 @@ class App extends Component {
       completed: false
     }
     this.setState({ todos: [...this.state.todos, newTodo] })
+
+    // axios.post("https://jsonplaceholder.typicode.com/todos", {
+    //   title: title,
+    //   completed: false
+    // }).then(res =>  console.log(res.data))
+    // .catch(
+    //   error => console.log(error.message)
+    // )
     
 
     //state is a special variable we can only change by setState re reflect immidiately
@@ -68,22 +90,37 @@ class App extends Component {
     //   }
 
     // )
-     console.log(this.state.todos)
+    // console.log(this.state.todos)
   
   }
 
   render(){
     return(
-      <div className="App">
-        <div className="container">
-        <Header />
-        <AddTodo addTodo = {this.addTodo}/>
-        <Todos todos = {this.state.todos} markComplete = { this.markComplete } delTodo = {this.delTodo}/>
+      <Router>
+        <div className="App">
+          <div className="container">
+          <Header />
+          <Route exact path="/" render={(props) => (
+            <React.Fragment>
+              <AddTodo addTodo = {this.addTodo}/>
+              <Todos todos = {this.state.todos} markComplete = { this.markComplete } delTodo = {this.delTodo}/>
+            </React.Fragment>
+          )} />
+          <Route path = "/about" render={(props) =>(
+
+            <React.Fragment>
+              <About />
+            </React.Fragment>
+
+          )} />
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 
 }
+//another method to route single component
+// <Route path = "/" conponent = {About} />
 
 export default App;
